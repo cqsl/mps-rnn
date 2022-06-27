@@ -1,0 +1,2 @@
+h5py==3.7.0
+git+https://github.com/wdphy16/netket.git@jax_operators
