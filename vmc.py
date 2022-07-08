@@ -238,8 +238,8 @@ def get_vmc(H, vstate, optimizer, preconditioner, *, _args=None):
     logger = nk.logging.JsonLog(
         _args.log_filename,
         "w",
-        save_params_every=_args.max_step // 10,
-        write_every=_args.max_step // 10,
+        save_params_every=_args.max_step // 100,
+        write_every=_args.max_step // 100,
     )
 
     return vmc, logger
