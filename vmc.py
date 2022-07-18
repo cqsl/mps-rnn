@@ -28,8 +28,6 @@ def get_ham(*, _args=None):
     if not _args:
         _args = args
 
-    S = 1 / 2
-
     if _args.boundary == "open":
         pbc = False
     elif _args.boundary == "peri":
@@ -45,7 +43,7 @@ def get_ham(*, _args=None):
     else:
         graph = nk.graph.Hypercube(length=_args.L, n_dim=_args.ham_dim, pbc=pbc)
 
-    hilbert = nk.hilbert.Spin(s=S, N=graph.n_nodes)
+    hilbert = nk.hilbert.Spin(s=1 / 2, N=graph.n_nodes)
 
     if _args.J == "afm":
         J = 1
@@ -56,20 +54,18 @@ def get_ham(*, _args=None):
 
     if _args.ham == "ising":
         assert _args.sign == "none"
-        H = nk.operator.IsingJax(
-            hilbert=hilbert, graph=graph, J=J * S**2, h=_args.h * S
-        )
+        H = nk.operator.IsingJax(hilbert=hilbert, graph=graph, J=J, h=_args.h)
     elif _args.ham.startswith("heis"):
         assert not _args.h
         if _args.ham.endswith("tri"):
             H = HeisenbergTriangular(
-                hilbert=hilbert, graph=graph, J=J * S**2, sign_rule=_args.sign
+                hilbert=hilbert, graph=graph, J=J, sign_rule=_args.sign
             )
         else:
             H = nk.operator.Heisenberg(
                 hilbert=hilbert,
                 graph=graph,
-                J=J * S**2,
+                J=J,
                 sign_rule=(_args.sign == "mars"),
             )
     else:
