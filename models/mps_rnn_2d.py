@@ -5,7 +5,7 @@ from jax import lax
 from jax import numpy as jnp
 from jax.nn.initializers import normal, zeros
 from netket.jax.utils import dtype_complex, dtype_real
-from netket.models.autoreg import AbstractARNN, _local_states_to_numbers
+from netket.models.autoreg import AbstractARNN
 from netket.utils.types import DType
 from plum import dispatch
 
@@ -158,7 +158,7 @@ def _get_new_h(model: MPSRNN2D, h_x, h_y, i, j):
 
 def _update_h_single(model, inputs, i, j, h, h_row):
     L = model.L
-    qn = _local_states_to_numbers(model.hilbert, inputs)
+    qn = model.hilbert.states_to_local_indices(inputs)
 
     # if i % 2 == 0:
     #     if j == 0:
@@ -297,7 +297,7 @@ _conditionals = jax.vmap(_conditionals_single, in_axes=(None, 0))
 @dispatch
 def _call_single(model: MPSRNN2D, inputs):
     L = model.L
-    qn = _local_states_to_numbers(model.hilbert, inputs)
+    qn = model.hilbert.states_to_local_indices(inputs)
 
     def scan_func(carry, index):
         h, h_row, log_psi, counts = carry

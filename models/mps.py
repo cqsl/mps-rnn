@@ -6,7 +6,7 @@ from jax import numpy as jnp
 from jax.nn.initializers import normal
 from jax.scipy.linalg import eigh
 from netket.jax.utils import dtype_complex, dtype_real
-from netket.models.autoreg import AbstractARNN, _local_states_to_numbers
+from netket.models.autoreg import AbstractARNN
 from netket.utils.types import DType
 from plum import dispatch
 
@@ -178,7 +178,7 @@ def _get_p(model: MPS, h, i):
 
 def _update_h_p_single(model, inputs, i, h, counts):
     L = model.hilbert.size
-    qn = _local_states_to_numbers(model.hilbert, inputs)
+    qn = model.hilbert.states_to_local_indices(inputs)
 
     qn_i = qn[model.reorder_prev[i]]
     h = h[qn_i]
@@ -228,7 +228,7 @@ _conditionals = jax.vmap(_conditionals_single, in_axes=(None, 0))
 
 @dispatch
 def _call_single(model: MPS, inputs):
-    qn = _local_states_to_numbers(model.hilbert, inputs)
+    qn = model.hilbert.states_to_local_indices(inputs)
 
     def scan_func(carry, i):
         h, log_psi, counts = carry

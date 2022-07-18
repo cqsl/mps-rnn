@@ -4,7 +4,6 @@ from jax import lax
 from jax import numpy as jnp
 from jax.nn.initializers import normal, zeros
 from netket.jax.utils import dtype_complex, dtype_real
-from netket.models.autoreg import _local_states_to_numbers
 from plum import dispatch
 
 from .mps import MPS, _update_h_p_single
@@ -51,7 +50,7 @@ def _get_p(model: MPSRNN1D, h, i):
 
 @dispatch
 def _call_single(model: MPSRNN1D, inputs):
-    qn = _local_states_to_numbers(model.hilbert, inputs)
+    qn = model.hilbert.states_to_local_indices(inputs)
 
     def scan_func(carry, i):
         h, log_psi, counts = carry
