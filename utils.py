@@ -2,8 +2,8 @@ import os
 from typing import get_args
 
 import flax
-import jax
 import numpy as np
+from jax.tree_util import tree_leaves, tree_map
 from netket.utils.types import Array
 
 from args import args
@@ -40,7 +40,7 @@ def leaf_size_real_nonzero(x):
 
 
 def tree_size_real_nonzero(tree):
-    return sum(jax.tree_leaves(jax.tree_map(leaf_size_real_nonzero, tree)))
+    return sum(tree_leaves(tree_map(leaf_size_real_nonzero, tree)))
 
 
 def try_load_variables(filename):
