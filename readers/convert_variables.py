@@ -28,7 +28,7 @@ def convert_variables(variables, args, *, eps=1e-7):
                 param = jnp.asarray(param, dtype_complex(args.dtype))
 
         if name[-1] in ["T", "M", "v", "Tk", "T0", "T1", "T2", "w_phase", "c_phase"]:
-            if jnp.isrealobj(args.dtype):
+            if jnp.issubdtype(args.dtype, jnp.floating):
                 param = param.real
             else:
                 param = param + 0j

@@ -24,7 +24,7 @@ def get_M(filename, V, S, B, dtype):
             # Read flattened data
             site = f["psi"][f"MPS[{i + 1}]"]
             m = np.asarray(site["storage"]["data"])
-            if np.isrealobj(dtype) and np.iscomplexobj(m):
+            if np.issubdtype(dtype, np.floating) and np.iscomplexobj(m):
                 assert (np.abs(m.imag) < 1e-7).all
                 m = m.real
 

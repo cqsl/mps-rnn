@@ -75,7 +75,7 @@ def get_variables_hierarchical(  # noqa: F811
     B = args.kernel_size
 
     M = jnp.asarray(variables["params"]["M"])
-    if jnp.isrealobj(args.dtype):
+    if jnp.issubdtype(args.dtype, jnp.floating):
         M = M.real
     else:
         M = M + 0j
@@ -255,7 +255,7 @@ def get_variables_hierarchical(  # noqa: F811
 
     if "T" in params_old:
         T = params_old["T"]
-        if jnp.isrealobj(args.dtype):
+        if jnp.issubdtype(args.dtype, jnp.floating):
             T = T.real
         else:
             T = T + 0j
