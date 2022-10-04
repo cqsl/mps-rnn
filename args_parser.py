@@ -3,7 +3,6 @@ import os
 from datetime import datetime
 
 import numpy as np
-from jax import numpy as jnp
 
 _parser_locked = False
 
@@ -302,14 +301,14 @@ def post_init_args(args):
 
     args.ham_name, args.net_name = get_ham_net_name(args)
 
-    if args.dtype in ["float32", jnp.float32]:
-        args.dtype = jnp.float32
-    elif args.dtype in ["float64", jnp.float64]:
-        args.dtype = jnp.float64
-    elif args.dtype in ["complex64", jnp.complex64]:
-        args.dtype = jnp.complex64
-    elif args.dtype in ["complex128", jnp.complex128]:
-        args.dtype = jnp.complex128
+    if args.dtype in ["float32", np.float32]:
+        args.dtype = np.float32
+    elif args.dtype in ["float64", np.float64]:
+        args.dtype = np.float64
+    elif args.dtype in ["complex64", np.complex64]:
+        args.dtype = np.complex64
+    elif args.dtype in ["complex128", np.complex128]:
+        args.dtype = np.complex128
     else:
         raise ValueError(f"Unknown dtype: {args.dtype}")
 

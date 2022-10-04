@@ -295,16 +295,12 @@ def main():
     hilbert, H = get_ham()
 
     model = get_net(hilbert)
-
     variables = try_load_variables_init(model)
-
     sampler = get_sampler(hilbert)
-
     vstate = get_vstate(sampler, model, variables)
     print("n_params", tree_size_real_nonzero(vstate.parameters))
 
     optimizer, preconditioner = get_optimizer()
-
     vmc, logger = get_vmc(H, vstate, optimizer, preconditioner)
 
     print("start_time", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
