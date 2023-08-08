@@ -133,11 +133,14 @@ def get_vstate(sampler, model, variables, *, _args=None, n_samples=None):
     if not n_samples:
         n_samples = _args.batch_size
 
-    vstate = nk.vqs.MCState(
-        sampler, model, n_samples=n_samples, variables=variables, seed=_args.seed
+    return nk.vqs.MCState(
+        sampler,
+        model,
+        n_samples=n_samples,
+        chunk_size=_args.chunk_size,
+        variables=variables,
+        seed=_args.seed,
     )
-    vstate.chunk_size = _args.chunk_size
-    return vstate
 
 
 def get_optimizer(*, _args=None):
@@ -192,8 +195,8 @@ def get_optimizer(*, _args=None):
     if _args.split_complex:
         optimizer = optax.split_real_and_imaginary(optimizer)
 
-    solver = partial(jax.scipy.sparse.linalg.cg, tol=1e-7, atol=1e-7, maxiter=10)
     if _args.optimizer == "sr":
+        solver = partial(jax.scipy.sparse.linalg.cg, tol=1e-7, atol=1e-7, maxiter=10)
         preconditioner = nk.optimizer.SR(
             qgt=QGTOnTheFly(), solver=solver, diag_shift=_args.diag_shift
         )
