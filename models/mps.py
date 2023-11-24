@@ -133,7 +133,7 @@ class MPS(AbstractARNN):
             inputs = jnp.expand_dims(inputs, axis=0)
         return inputs
 
-    def _conditional(self, inputs, index):
+    def conditional(self, inputs, index):
         inputs = self._preprocess_dim(inputs)
         p, self.h.value, self.counts.value = _update_h_p(
             self, inputs, index, self.h.value, self.counts.value
