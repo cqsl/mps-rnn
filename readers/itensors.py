@@ -5,8 +5,7 @@ import h5py
 import jax
 import numpy as np
 from jax import numpy as jnp
-from netket.jax import PRNGKey
-from netket.jax.utils import dtype_real
+from netket.jax import PRNGKey, dtype_real
 from plum import dispatch
 from scipy.linalg import eigh
 
