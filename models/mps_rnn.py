@@ -3,7 +3,7 @@ from math import sqrt
 from jax import lax
 from jax import numpy as jnp
 from jax.nn.initializers import normal, zeros
-from netket.jax.utils import dtype_complex, dtype_real
+from netket.jax import dtype_complex, dtype_real
 from plum import dispatch
 
 from .mps import MPS, _update_h_p_single

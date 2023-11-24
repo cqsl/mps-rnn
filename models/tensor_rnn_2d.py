@@ -2,7 +2,7 @@ from math import sqrt
 
 from jax import numpy as jnp
 from jax.nn.initializers import normal, zeros
-from netket.jax.utils import dtype_real
+from netket.jax import dtype_real
 from plum import dispatch
 
 from .mps_rnn_2d import MPSRNN2D, wrap_M_init_zero_boundary

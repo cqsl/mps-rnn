@@ -4,7 +4,7 @@ import jax
 from jax import lax
 from jax import numpy as jnp
 from jax.nn.initializers import normal, zeros
-from netket.jax.utils import dtype_complex, dtype_real
+from netket.jax import dtype_complex, dtype_real
 from netket.models.autoreg import AbstractARNN
 from netket.utils.types import DType
 from plum import dispatch
