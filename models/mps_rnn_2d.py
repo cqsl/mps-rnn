@@ -119,7 +119,7 @@ class MPSRNN2D(AbstractARNN):
         inputs = inputs.reshape((-1, L, L))
         return inputs
 
-    def _conditional(self, inputs, index):
+    def conditional(self, inputs, index):
         L = self.L
         i, j = divmod(index, L)
 
