@@ -169,7 +169,10 @@ def get_optimizer(*, _args=None):
         chain.append(optax.clip_by_global_norm(_args.grad_clip))
     if _args.optimizer == "adam":
         chain.append(optax.scale_by_adam())
-    chain.append(optax.scale(-_args.lr))
+    lr = optax.linear_schedule(
+        init_value=1e-6, end_value=args.lr, transition_steps=args.max_step // 10
+    )
+    chain.append(optax._src.alias._scale_by_learning_rate(lr))
 
     optimizer = optax.chain(*chain)
 
@@ -193,7 +196,7 @@ def get_optimizer(*, _args=None):
         optimizer = optax.multi_transform(transforms, label_fn)
 
     if _args.split_complex:
-        optimizer = optax.split_real_and_imaginary(optimizer)
+        optimizer = optax.experimental.split_real_and_imaginary(optimizer)
 
     if _args.optimizer == "sr":
         solver = partial(jax.scipy.sparse.linalg.cg, tol=1e-7, atol=1e-7, maxiter=10)
