@@ -250,7 +250,7 @@ def try_load_variables_init(model, *, _args=None):
 
     config = [
         ("init.mpack", try_load_variables),
-        ("init_rd.mpack", try_load_hierarchical),
+        ("init_hi.mpack", try_load_hierarchical),
         ("init_el.mpack", try_load_enlarge),
         ("init.hdf5", try_load_itensors),
     ]
