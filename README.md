@@ -4,17 +4,16 @@ Paper link: [arXiv:2206.12363](https://arxiv.org/abs/2206.12363) | [Phys. Rev. R
 
 ## Installation
 
-The code requires Python >= 3.8. For reference, we use Python 3.10.12. We recommend creating a fresh virtual environment before installing.
+The code requires Python >= 3.9. For reference, we use Python 3.10.12. We recommend creating a fresh virtual environment before installing. Use `pip install -r requirements.txt` to install the dependencies.
 
-First install the specific version of `jaxlib`, either without CUDA:
+We recommend additionally installing CUDA, cuDNN, and a CUDA-accelerated jaxlib. The recent versions of jaxlib only support CUDA 12 and cuDNN 8.9:
 ```
-pip install jaxlib==0.3.25 -f https://storage.googleapis.com/jax-releases/jax_releases.html
+pip install jaxlib==0.4.28+cuda12.cudnn89 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ```
-or with CUDA (only CUDA 11 is supported):
+Alternatively, you may install jax and jaxlib 0.4.25, which support CUDA 11 and cuDNN 8.6:
 ```
-pip install jaxlib==0.3.25+cuda11.cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+pip install jax jaxlib==0.4.25+cuda11.cudnn86 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ```
-Then use `pip install -r requirements.txt` to install the dependencies. Currently it requires a custom branch of NetKet, and we are working on upstreaming it to the master branch.
 
 The DMRG code in `dmrg/` requires Julia >= 1.6. For reference, we use Julia 1.10.3. You need to activate the environment `dmrg/Project.toml` when running it. It includes MKL, which provides acceleration on Intel CPUs.
 
