@@ -4,7 +4,9 @@ Paper link: [arXiv:2206.12363](https://arxiv.org/abs/2206.12363) | [Phys. Rev. R
 
 ## Installation
 
-The code requires Python >= 3.8, and we recommend installing the dependencies in a fresh virtual environment. First install the specific version of `jaxlib`, either without CUDA:
+The code requires Python >= 3.8. For reference, we use Python 3.10.12. We recommend creating a fresh virtual environment before installing.
+
+First install the specific version of `jaxlib`, either without CUDA:
 ```
 pip install jaxlib==0.3.25 -f https://storage.googleapis.com/jax-releases/jax_releases.html
 ```
@@ -13,6 +15,8 @@ or with CUDA (only CUDA 11 is supported):
 pip install jaxlib==0.3.25+cuda11.cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ```
 Then use `pip install -r requirements.txt` to install the dependencies. Currently it requires a custom branch of NetKet, and we are working on upstreaming it to the master branch.
+
+The DMRG code in `dmrg/` requires Julia >= 1.6. For reference, we use Julia 1.10.3. You need to activate the environment `dmrg/Project.toml` when running it. It includes MKL, which provides acceleration on Intel CPUs.
 
 ## Usage
 
