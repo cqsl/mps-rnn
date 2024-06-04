@@ -21,6 +21,7 @@ from readers import (
     try_load_hierarchical,
     try_load_itensors,
 )
+from sampler import MPSDirectSampler
 from utils import init_out_dir, tree_size_real_nonzero, try_load_variables
 
 
@@ -120,7 +121,7 @@ def get_sampler(hilbert, *, _args=None):
     if not _args:
         _args = args
 
-    return nk.sampler.ARDirectSampler(
+    return MPSDirectSampler(
         hilbert,
         dtype=dtype_real(_args.dtype),
         symmetrize_fun=symmetrize_spins if _args.refl_sym else None,

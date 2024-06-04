@@ -5,13 +5,12 @@ from jax import lax
 from jax import numpy as jnp
 from jax.nn.initializers import normal, zeros
 from netket.jax import dtype_complex, dtype_real
-from netket.models.autoreg import AbstractARNN
-from netket.utils.types import DType
 from plum import dispatch
 
 from .gpu_cond import gpu_cond
 from .mps import _normalize_h
-from .reorder import get_reorder_idx, inv_reorder, reorder
+from .mps_base import MPSBase
+from .reorder import get_reorder_idx
 from .symmetry import symmetrize_model
 
 
@@ -31,20 +30,7 @@ def wrap_M_init_zero_boundary(M_init):
     return wrapped_M_init
 
 
-class MPSRNN2D(AbstractARNN):
-    bond_dim: int
-    zero_mag: bool
-    refl_sym: bool
-    affine: bool
-    no_phase: bool
-    no_w_phase: bool
-    cond_psi: bool
-    reorder_type: str
-    reorder_dim: int
-    dtype: DType = jnp.complex64
-    machine_pow: int = 2
-    eps: float = 1e-7
-
+class MPSRNN2D(MPSBase):
     def _common_setup(self):
         assert self.reorder_type == "snake"
 
@@ -140,12 +126,6 @@ class MPSRNN2D(AbstractARNN):
             return symmetrize_model(lambda x: _call(self, x))(inputs)
         else:
             return _call(self, inputs)
-
-    def reorder(self, inputs):
-        return reorder(self, inputs)
-
-    def inverse_reorder(self, inputs):
-        return inv_reorder(self, inputs)
 
 
 @dispatch

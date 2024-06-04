@@ -6,12 +6,11 @@ from jax import numpy as jnp
 from jax.nn.initializers import normal
 from jax.scipy.linalg import eigh
 from netket.jax import dtype_complex, dtype_real
-from netket.models.autoreg import AbstractARNN
-from netket.utils.types import DType
 from plum import dispatch
 
 from .gpu_cond import gpu_cond
-from .reorder import get_reorder_idx, get_reorder_prev, inv_reorder, reorder
+from .mps_base import MPSBase
+from .reorder import get_reorder_idx, get_reorder_prev
 from .symmetry import symmetrize_model
 
 
@@ -65,20 +64,7 @@ def get_gamma(M, right_boundary, reorder_idx=None, inv_reorder_idx=None):
     return gamma
 
 
-class MPS(AbstractARNN):
-    bond_dim: int
-    zero_mag: bool
-    refl_sym: bool
-    affine: bool
-    no_phase: bool
-    no_w_phase: bool
-    cond_psi: bool
-    reorder_type: str
-    reorder_dim: int
-    dtype: DType = jnp.complex64
-    machine_pow: int = 2
-    eps: float = 1e-7
-
+class MPS(MPSBase):
     def _common_setup(self):
         B = self.bond_dim
 
@@ -151,12 +137,6 @@ class MPS(AbstractARNN):
             return symmetrize_model(lambda x: _call(self, x))(inputs)
         else:
             return _call(self, inputs)
-
-    def reorder(self, inputs):
-        return reorder(self, inputs)
-
-    def inverse_reorder(self, inputs):
-        return inv_reorder(self, inputs)
 
 
 def _get_new_h(model, h, i):
