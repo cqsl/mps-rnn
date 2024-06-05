@@ -34,3 +34,5 @@ cp out/$HAM_DIR/mps_rnn_2d_$NET_DIR/out.mpack out/$HAM_DIR/tensor_rnn_cmpr_2d_$N
 mkdir -p out/$HAM_DIR/tensor_rnn_2d_$NET_DIR
 cp out/$HAM_DIR/tensor_rnn_cmpr_2d_$NET_DIR/out.mpack out/$HAM_DIR/tensor_rnn_2d_$NET_DIR/init_hi.mpack
 ./vmc.py $HAM_ARGS --net tensor_rnn --net_dim 2 $NET_ARGS $OPT_ARGS
+
+./plot_hi.py

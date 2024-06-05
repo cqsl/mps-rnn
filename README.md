@@ -19,4 +19,8 @@ The DMRG code in `dmrg/` requires Julia >= 1.6. For reference, we use Julia 1.10
 
 ## Usage
 
-`vmc.py` trains a network. It will automatically read checkpoints when doing the hierarchical initialization. `args_parser.py` contains all the configurations.
+`vmc.py` trains a network. It will automatically read checkpoints when doing the hierarchical initialization (HI). `args_parser.py` contains all the configurations.
+
+`reproduce_hi.sh` contains commands for the whole procedure of HI. `plot_hi.py` is invoked at the end to plot the energy during training.
+
+`run_tests.sh` contains unit tests for the ansatzes.
