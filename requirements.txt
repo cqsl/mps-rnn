@@ -32,7 +32,7 @@ optax==0.2.2
 orbax-checkpoint==0.5.15
 orjson==3.10.3
 packaging==24.0
-pillow==10.3.0
+pillow==12.1.1
 protobuf==5.27.0
 pycparser==2.22
 Pygments==2.18.0
